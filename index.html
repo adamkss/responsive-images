@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Picture</title>
+    <style type="text/css">
+      html {
+        overflow: hidden;
+      }
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      .main {
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "menu-section"
+          "picture-section";
+      }
+      .picture-section {
+        grid-area: picture-section;
+        position: relative;
+      }
+      .image-source-text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 1em;
+        font-size: 2rem;
+        text-align: center;
+        color: white;
+        background-color: brown;
+        overflow: hidden;
+      }
+      .menu-section {
+        grid-area: menu-section;
+        background-color: yellow;
+        min-height: 45vh;
+      }
+      @media (min-width: 50em) {
+        .main {
+          grid-template-columns: 1fr 1fr;
+          grid-template-areas: "picture-section menu-section";
+        }
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+    <script>
+      function getFilename(path) {
+        const parts = path.split("/");
+        return parts[parts.length - 1];
+      }
+      window.onload = function () {
+        const imgEl = document.getElementById("leaf-image");
+        const imgLabel = document.getElementById("image-source-text");
+        imgLabel.innerText = getFilename(imgEl.currentSrc);
+        
+        window.addEventListener("resize", () => {
+          imgLabel.innerText = getFilename(imgEl.currentSrc);
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <div class="main">
+      <section class="picture-section">
+        <span id="image-source-text" class="image-source-text"></span>
+        <picture>
+          <source
+            type="image/webp"
+            srcset="
+              images/leaf-w_3080.webp 3080w,
+              images/leaf-w_2890.webp 2890w,
+              images/leaf-w_2593.webp 2593w,
+              images/leaf-w_2260.webp 2260w,
+              images/leaf-w_1904.webp 1904w,
+              images/leaf-w_1549.webp 1549w,
+              images/leaf-w_1066.webp 1066w,
+              images/leaf-w_310.webp   310w
+            "
+            sizes="
+                (min-width: 50em) 50vw,
+                100vw"
+          />
+          <source
+            type="image/jpeg"
+            srcset="
+              images/leaf-w_3080.jpg 3080w,
+              images/leaf-w_2890.jpg 2890w,
+              images/leaf-w_2593.jpg 2593w,
+              images/leaf-w_2260.jpg 2260w,
+              images/leaf-w_1904.jpg 1904w,
+              images/leaf-w_1549.jpg 1549w,
+              images/leaf-w_1066.jpg 1066w,
+              images/leaf-w_310.jpg   310w
+            "
+            sizes="
+                (min-width: 50em) 50vw,
+                100vw"
+          />
+          <img id="leaf-image" src="images/leaf-w_310.jpg" alt="A leaf" />
+        </picture>
+      </section>
+      <section class="menu-section"></section>
+    </div>
+  </body>
+</html>
